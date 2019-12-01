@@ -13,7 +13,9 @@ let dots = [];
 let dotTrajectories = [];
 let n = 30;
 let neighborThresh = 3; // the max number of connections
-let distThresh = 50;
+let distThresh = 200;
+
+let speed = 1;
 
 function setup(){
 	createCanvas(500, 500);
@@ -40,13 +42,26 @@ function realMod(n, m){
 
 function perturbDots(){
 	for(let i in dots){
-		dots[i].x += randomGaussian(0, 1);
-		dots[i].y += randomGaussian(0, 1);
-		// dots[i].x += (random()-0.5)*10;
-		// dots[i].y += (random()-0.5)*10;
 
-		dots[i].x = realMod(dots[i].x, width);
-		dots[i].y = realMod(dots[i].y, height);
+		dots[i].x += randomGaussian(0, speed);
+		dots[i].y += randomGaussian(0, speed);
+		// dots[i].x += (random()-0.5)*10*speed;
+		// dots[i].y += (random()-0.5)*10*speed;
+
+    // bounce off boundaries
+    if (dots[i].x > width){
+      dots[i].x -= speed*5;
+    }
+    else if (dots[i].x < 0){
+      dots[i].x += speed*5;
+    }
+    if (dots[i].y > height){
+      dots[i].y -= speed*5;
+    }
+    else if (dots[i].y < 0){
+      dots[i].y += speed*5;
+    }
+
 	}
 }
 
